@@ -15,16 +15,16 @@ rows = 20
 class cube():
     rows = 20
     w = 500
-    def __init__(self, start, dirnx=1, dirny=0, color=(255,0,0)):
+    def __init__(self, start, cordx=1, cordy=0, color=(255, 0, 0)):
         self.pos = start
-        self.dirnx = dirnx
-        self.dirny = dirny # "L", "R", "U", "D"
+        self.cordx = cordx
+        self.cordy = cordy # "Left", "Right", "Up", "Down"
         self.color = color
 
-    def move(self, dirnx, dirny):
-        self.dirnx = dirnx
-        self.dirny = dirny
-        self.pos  = (self.pos[0] + self.dirnx, self.pos[1] + self.dirny)
+    def move(self, cordx, cordy):
+        self.cordx = cordx
+        self.cordy = cordy
+        self.pos  = (self.pos[0] + self.cordx, self.pos[1] + self.cordy)
             
 
     def draw(self, surface, eyes=False):
@@ -52,8 +52,8 @@ class snake():
         self.color = color
         self.head = cube(pos)
         self.body.append(self.head)
-        self.dirnx = 0
-        self.dirny = 1
+        self.cordx = 0
+        self.cordy = 1
     
     def move(self):
         for event in pygame.event.get():
@@ -63,21 +63,21 @@ class snake():
 
             for key in keys:
                 if keys[pygame.K_LEFT]:
-                    self.dirnx = -1
-                    self.dirny = 0
-                    self.turns[self.head.pos[:]] = [self.dirnx,self.dirny]
+                    self.cordx = -1
+                    self.cordy = 0
+                    self.turns[self.head.pos[:]] = [self.cordx, self.cordy]
                 elif keys[pygame.K_RIGHT]:
-                    self.dirnx = 1
-                    self.dirny = 0
-                    self.turns[self.head.pos[:]] = [self.dirnx,self.dirny]
+                    self.cordx = 1
+                    self.cordy = 0
+                    self.turns[self.head.pos[:]] = [self.cordx, self.cordy]
                 elif keys[pygame.K_UP]:
-                    self.dirny = -1
-                    self.dirnx = 0
-                    self.turns[self.head.pos[:]] = [self.dirnx,self.dirny]
+                    self.cordy = -1
+                    self.cordx = 0
+                    self.turns[self.head.pos[:]] = [self.cordx, self.cordy]
                 elif keys[pygame.K_DOWN]:
-                    self.dirny = 1
-                    self.dirnx = 0
-                    self.turns[self.head.pos[:]] = [self.dirnx,self.dirny]
+                    self.cordy = 1
+                    self.cordx = 0
+                    self.turns[self.head.pos[:]] = [self.cordx, self.cordy]
         
         for i, c in enumerate(self.body):
             p = c.pos[:]
@@ -87,7 +87,7 @@ class snake():
                 if i == len(self.body)-1:
                     self.turns.pop(p)
             else:
-                c.move(c.dirnx,c.dirny)
+                c.move(c.cordx, c.cordy)
         
         
     def reset(self,pos):
@@ -95,12 +95,12 @@ class snake():
         self.body = []
         self.body.append(self.head)
         self.turns = {}
-        self.dirnx = 0
-        self.dirny = 1
+        self.cordx = 0
+        self.cordy = 1
 
     def addCube(self):
         tail = self.body[-1]
-        dx, dy = tail.dirnx, tail.dirny
+        dx, dy = tail.cordx, tail.cordy
 
         if dx == 1 and dy == 0:
             self.body.append(cube((tail.pos[0]-1,tail.pos[1])))
@@ -111,8 +111,8 @@ class snake():
         elif dx == 0 and dy == -1:
             self.body.append(cube((tail.pos[0],tail.pos[1]+1)))
 
-        self.body[-1].dirnx = dx
-        self.body[-1].dirny = dy
+        self.body[-1].cordx = dx
+        self.body[-1].cordy = dy
     
     def draw(self, surface):
         for i,c in enumerate(self.body):
@@ -192,7 +192,8 @@ def main():
                     
         redrawWindow()
 
-main()
+if __name__ == '__main__':
+    main()
     
 
     
