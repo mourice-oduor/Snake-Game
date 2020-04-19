@@ -15,6 +15,15 @@ The player is represented as snake, which grows if it eats an apple.
   This is very easy in the early phase of the game but is increasingly more difficult as the length of the snake grows.
 # .....................................................................
 
+# More Links to Explanation notes:
+#                            https://techwithtim.net/tutorials/game-development-with-python/snake-pygame/tutorial-1/
+#                            https://techwithtim.net/tutorials/game-development-with-python/snake-pygame/tutorial-2/
+#                            https://techwithtim.net/tutorials/game-development-with-python/snake-pygame/tutorial-3/
+#                            https://techwithtim.net/tutorials/game-development-with-python/snake-pygame/tutorial-4/
+#                            https://theailearner.com/2018/10/06/creating-a-snake-game-with-pygame/
+#                            https://medium.com/@omarpit26/making-a-simple-snake-game-in-python-part-1-42eb2890f0eb
+#                            https://pythonspot.com/snake-with-pygame/
+
 To install pygame from pip3 you need to install all the C dependencies manually in order for pip to be able to build it.
 -This happens mostly with Debian based OS, users.\
 -In order to solve this, run:
