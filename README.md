@@ -18,3 +18,8 @@ After this, install pygame on the terminal by;
 # sudo pip3 install pygame
 # sudo apt-get update
 # sudo apt-get upgrade
+
+Further links to install pygame:
+# https://askubuntu.com/questions/312767/installing-pygame-with-pip
+# https://stackoverflow.com/questions/19579528/pygame-installation-sdl-config-command-not-found
+# https://forum.ubiquityrobotics.com/t/im-trying-to-install-some-software-packages-but-i-keep-getting-errors/363/3
