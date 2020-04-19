@@ -1,6 +1,8 @@
 # Snake-Game
 Python classic snake game made by pygame module.
 
+This repo contains several versions and modified scripts python of snake-game.
+
 # Requirements
 - Python 3.x
 - pygame
