@@ -1,9 +1,33 @@
-import math
+import sys
 import random
+import math
 import pygame
+import pygame as pg
 import tkinter as tk
 from tkinter import messagebox
- 
+
+
+# Colors
+red = pg.Color(255, 0, 0)
+green = pg.Color(0, 255, 0)
+black = pg.Color(0, 0, 0)
+white = pg.Color(255, 255, 255)
+brown = pg.Color(165, 42, 42)
+
+global score
+
+#Show Score
+def showScore(choice=1):
+    SFont = pygame.font.SysFont('times', 28)
+    Ssurf = SFont.render("Score  :  {0}".format(score), True, black)
+    Srect = Ssurf.get_rect()
+    if choice == 1:
+        Srect.midtop = (200, 100)
+    else:
+        Srect.midtop = (400, 200)
+    playSurface.blit(Ssurf, Srect)
+
+
 class cube(object):
     rows = 20
     w = 500
@@ -87,6 +111,19 @@ class snake(object):
                 elif c.cordy == 1 and c.pos[1] >= c.rows-1: c.pos = (c.pos[0], 0)
                 elif c.cordy == -1 and c.pos[1] <= 0: c.pos = (c.pos[0], c.rows - 1)
                 else: c.move(c.cordx, c.cordy)
+
+
+            #if s.body[0] in s.body[1:]: break
+            # Self hit
+            for block in s.body[1:]:
+                if c.pos == block:
+                    content = "GAME OVER!!"
+                    message_box("\'You Lost!' '\', '\'Play again...' '\'", content)
+                    #s.reset((10, 10))
+                    #break
+                    pygame.quit()
+                    sys.exit()
+                    # gameOver()
        
  
     def reset(self, pos):
@@ -138,7 +175,7 @@ def drawGrid(w, rows, surface):
  
 def redrawWindow(surface):
     global rows, width, s, snack
-    surface.fill((0,0,0))
+    surface.fill((0,0,255))
     s.draw(surface)
     snack.draw(surface)
     drawGrid(width,rows, surface)
@@ -161,24 +198,26 @@ def randomSnack(rows, item):
  
  
 def message_box(subject, content):
-    root = tk.Tk()
-    root.attributes("-topmost", True)
-    root.withdraw()
+    window = tk.Tk()
+    window.attributes("-topmost", True)
+    window.withdraw()
     messagebox.showinfo(subject, content)
     try:
-        root.destroy()
+        window.destroy()
     except:
         pass
- 
+
  
 def main():
     global width, rows, s, snack
     width = 500
     rows = 20
     win = pygame.display.set_mode((width, width))
+    pg.display.set_caption('Python Snake_Game')
     s = snake((255,0,0), (10,10))
     snack = cube(randomSnack(rows, s), color=(0,255,0))
     flag = True
+    score = 0
  
     clock = pygame.time.Clock()
    
@@ -188,7 +227,10 @@ def main():
         s.move()
         if s.body[0].pos == snack.pos:
             s.addCube()
+            score += 1
             snack = cube(randomSnack(rows, s), color=(0,255,0))
+        # else:
+        #     s.body.pop()
  
         for x in range(len(s.body)):
             if s.body[x].pos in list(map(lambda z:z.pos,s.body[x+1:])):
@@ -196,10 +238,13 @@ def main():
                 content = "GAME OVER!!"
                 message_box("\'You Lost!' '\', '\'Play again...' '\'", content)
                 s.reset((10,10))
-                break
+                #break
+                showScore()
+                pygame.quit()
+                sys.exit()
 
         redrawWindow(win)
     pass
- 
+
 if __name__ == '__main__':
     main()
