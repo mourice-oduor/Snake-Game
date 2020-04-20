@@ -16,6 +16,7 @@ play = pygame.mixer.music.play(loops=-1, start=0.0)
 # Colors
 red = pg.Color(255, 0, 0)
 green = pg.Color(0, 255, 0)
+blue = pg.Color(0, 0, 255)
 black = pg.Color(0, 0, 0)
 white = pg.Color(255, 255, 255)
 brown = pg.Color(165, 42, 42)
@@ -35,6 +36,7 @@ def showScore(choice=1):
         Score_rect.midtop = (100, 10)
     else:
         Score_rect.midtop = (400, 100)
+        
     win.blit(Scoresurf, Score_rect)
     showScore()
     Scoresurf = ScoreFont.render("Score  :  {0}".format(score), True, black)
