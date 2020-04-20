@@ -5,7 +5,13 @@ import pygame
 import pygame as pg
 import tkinter as tk
 from tkinter import messagebox
+from os import path
+from pygame.locals import *
 
+pygame.mixer.init()
+sound_dir = path.join(path.dirname(__file__), 'sounds')
+snack_sound = pygame.mixer.music.load(path.join(sound_dir, 'atmosphere.mp3'))
+play = pygame.mixer.music.play(loops=-1, start=0.0)
 
 # Colors
 red = pg.Color(255, 0, 0)
@@ -15,17 +21,24 @@ white = pg.Color(255, 255, 255)
 brown = pg.Color(165, 42, 42)
 
 global score
+pygame.init()
+size = width, height = 500,500
+win = pygame.display.set_mode(size)
+score = 0
 
 #Show Score
 def showScore(choice=1):
-    SFont = pygame.font.SysFont('times', 28)
-    Ssurf = SFont.render("Score  :  {0}".format(score), True, black)
-    Srect = Ssurf.get_rect()
+    ScoreFont = pygame.font.SysFont('freesansbold.ttf', 30)
+    Scoresurf = ScoreFont.render("Score  :  {0}".format(score), True, black)
+    Score_rect = Scoresurf.get_rect()
     if choice == 1:
-        Srect.midtop = (200, 100)
+        Score_rect.midtop = (100, 10)
     else:
-        Srect.midtop = (400, 200)
-    playSurface.blit(Ssurf, Srect)
+        Score_rect.midtop = (400, 100)
+    win.blit(Scoresurf, Score_rect)
+    showScore()
+    Scoresurf = ScoreFont.render("Score  :  {0}".format(score), True, black)
+    pygame.display.flip()
 
 
 class cube(object):
@@ -123,7 +136,6 @@ class snake(object):
                     #break
                     pygame.quit()
                     sys.exit()
-                    # gameOver()
        
  
     def reset(self, pos):
@@ -229,17 +241,17 @@ def main():
             s.addCube()
             score += 1
             snack = cube(randomSnack(rows, s), color=(0,255,0))
-        # else:
-        #     s.body.pop()
+            # snack_sound.play()
+            # time.sleep(2)
+
  
         for x in range(len(s.body)):
             if s.body[x].pos in list(map(lambda z:z.pos,s.body[x+1:])):
                 print("\'Score: \', len(s.body)")
                 content = "GAME OVER!!"
                 message_box("\'You Lost!' '\', '\'Play again...' '\'", content)
-                s.reset((10,10))
+                #s.reset((10,10))
                 #break
-                showScore()
                 pygame.quit()
                 sys.exit()
 
