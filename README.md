@@ -16,6 +16,7 @@ The player is represented as snake, which grows if it eats an apple.
 # .....................................................................
 
 # More Links to Explanation notes:
+#                            https://www.pygame.org/docs/
 #                            https://techwithtim.net/tutorials/game-development-with-python/snake-pygame/tutorial-1/
 #                            https://techwithtim.net/tutorials/game-development-with-python/snake-pygame/tutorial-2/
 #                            https://techwithtim.net/tutorials/game-development-with-python/snake-pygame/tutorial-3/
