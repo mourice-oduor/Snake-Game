@@ -1,6 +1,7 @@
 import sys
 import random
 import math
+import time
 import pygame
 import pygame as pg
 import tkinter as tk
@@ -10,8 +11,9 @@ from pygame.locals import *
 
 pygame.mixer.init()
 sound_dir = path.join(path.dirname(__file__), 'sounds')
-snack_sound = pygame.mixer.music.load(path.join(sound_dir, 'atmosphere.mp3'))
+Game_sound = pygame.mixer.music.load(path.join(sound_dir, 'atmosphere.mp3'))
 play = pygame.mixer.music.play(loops=-1, start=0.0)
+#food_sound = pygame.mixer.music.load(path.join(sound_dir, 'campana-timbre-hotel-ipiales.wav'))
 
 # Colors
 red = pg.Color(255, 0, 0)
@@ -36,10 +38,9 @@ def showScore(choice=1):
         Score_rect.midtop = (100, 10)
     else:
         Score_rect.midtop = (400, 100)
-        
+
     win.blit(Scoresurf, Score_rect)
     showScore()
-    Scoresurf = ScoreFont.render("Score  :  {0}".format(score), True, black)
     pygame.display.flip()
 
 
@@ -86,6 +87,7 @@ class snake(object):
         self.cordy = 1
  
     def move(self):
+        pygame.init()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -134,6 +136,7 @@ class snake(object):
                 if c.pos == block:
                     content = "GAME OVER!!"
                     message_box("\'You Lost!' '\', '\'Play again...' '\'", content)
+                    showScore(0)
                     #s.reset((10, 10))
                     #break
                     pygame.quit()
@@ -188,15 +191,15 @@ def drawGrid(w, rows, surface):
        
  
 def redrawWindow(surface):
-    global rows, width, s, snack
-    surface.fill((0,0,255))
+    global rows, width, s, food
+    surface.fill(blue)
     s.draw(surface)
-    snack.draw(surface)
+    food.draw(surface)
     drawGrid(width,rows, surface)
     pygame.display.update()
  
  
-def randomSnack(rows, item):
+def randomFood(rows, item):
  
     positions = item.body
  
@@ -223,13 +226,13 @@ def message_box(subject, content):
 
  
 def main():
-    global width, rows, s, snack
+    global width, rows, s, food
     width = 500
     rows = 20
     win = pygame.display.set_mode((width, width))
     pg.display.set_caption('Python Snake_Game')
     s = snake((255,0,0), (10,10))
-    snack = cube(randomSnack(rows, s), color=(0,255,0))
+    food = cube(randomFood(rows, s), color=(0, 255, 0))
     flag = True
     score = 0
  
@@ -239,12 +242,12 @@ def main():
         pygame.time.delay(50)
         clock.tick(10)
         s.move()
-        if s.body[0].pos == snack.pos:
+        if s.body[0].pos == food.pos:
             s.addCube()
             score += 1
-            snack = cube(randomSnack(rows, s), color=(0,255,0))
-            # snack_sound.play()
-            # time.sleep(2)
+            food = cube(randomFood(rows, s), color=(0, 255, 0))
+            # food_sound.play()
+            # time.sleep(1)
 
  
         for x in range(len(s.body)):
@@ -252,6 +255,7 @@ def main():
                 print("\'Score: \', len(s.body)")
                 content = "GAME OVER!!"
                 message_box("\'You Lost!' '\', '\'Play again...' '\'", content)
+                #showScore(0)
                 #s.reset((10,10))
                 #break
                 pygame.quit()
